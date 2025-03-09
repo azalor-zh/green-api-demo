@@ -22,4 +22,4 @@
 - `index.html` — основной HTML-файл со всеми методами и интерфейсом.
 
 ## 📸 Видео-демо
-Пример записи видео-демонстрации (https://drive.google.com/file/d/1sr37tGIBkbPvggv8JEvxvpsLCja22y4t/view?usp=sharing).
+Пример записи видео-демонстрации [Google disk](https://drive.google.com/file/d/1sr37tGIBkbPvggv8JEvxvpsLCja22y4t/view?usp=sharing).
