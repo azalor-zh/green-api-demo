@@ -11,12 +11,25 @@
       background-color: #f5f5f5;
     }
     .container {
-      max-width: 600px;
-      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .form-section, .response-section {
+      flex: 1 1 100%;
       background: #fff;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+    }
+    @media (min-width: 768px) {
+      .form-section, .response-section {
+        flex: 1;
+      }
     }
     input, textarea, button {
       width: 100%;
@@ -24,6 +37,7 @@
       padding: 10px;
       border-radius: 5px;
       border: 1px solid #ccc;
+      box-sizing: border-box;
     }
     button {
       background-color: #4CAF50;
@@ -42,29 +56,33 @@
 </head>
 <body>
   <div class="container">
-    <h2>GREEN-API Demo</h2>
-    <label>ID Instance:</label>
-    <input type="text" id="idInstance" placeholder="Введите idInstance">
-    
-    <label>API Token Instance:</label>
-    <input type="text" id="apiTokenInstance" placeholder="Введите apiTokenInstance">
+    <div class="form-section">
+      <h2>GREEN-API Demo</h2>
+      <label>ID Instance:</label>
+      <input type="text" id="idInstance" placeholder="Введите idInstance">
 
-    <button onclick="getSettings()">getSettings</button>
-    <button onclick="getStateInstance()">getStateInstance</button>
-    <button onclick="sendMessage()">sendMessage</button>
-    <button onclick="sendFileByUrl()">sendFileByUrl</button>
+      <label>API Token Instance:</label>
+      <input type="text" id="apiTokenInstance" placeholder="Введите apiTokenInstance">
 
-    <label>Номер получателя (для sendMessage и sendFileByUrl):</label>
-    <input type="text" id="phoneNumber" placeholder="например: 79991234567">
+      <button onclick="getSettings()">getSettings</button>
+      <button onclick="getStateInstance()">getStateInstance</button>
+      <button onclick="sendMessage()">sendMessage</button>
+      <button onclick="sendFileByUrl()">sendFileByUrl</button>
 
-    <label>Текст сообщения:</label>
-    <input type="text" id="messageText" placeholder="Введите сообщение">
+      <label>Номер получателя (для sendMessage и sendFileByUrl):</label>
+      <input type="text" id="phoneNumber" placeholder="например: 79991234567">
 
-    <label>URL файла (для sendFileByUrl):</label>
-    <input type="text" id="fileUrl" placeholder="https://example.com/file.pdf">
+      <label>Текст сообщения:</label>
+      <input type="text" id="messageText" placeholder="Введите сообщение">
 
-    <label>Ответ от API:</label>
-    <textarea id="apiResponse" class="readonly" rows="10" readonly></textarea>
+      <label>URL файла (для sendFileByUrl):</label>
+      <input type="text" id="fileUrl" placeholder="https://example.com/file.pdf">
+    </div>
+
+    <div class="response-section">
+      <h3>Ответ от API:</h3>
+      <textarea id="apiResponse" class="readonly" rows="30" readonly></textarea>
+    </div>
   </div>
 
   <script>
