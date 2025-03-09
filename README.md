@@ -13,7 +13,7 @@
 
 1. Получите `idInstance` и `apiTokenInstance` в личном кабинете GREEN-API.
 2. Подключите WhatsApp, отсканировав QR-код.
-3. Откройте [эту HTML-страницу](https://ваша-ссылка-github-pages).
+3. Откройте [эту HTML-страницу]([https://ваша-ссылка-github-pages](https://azalor-zh.github.io/green-api-demo/)).
 4. Введите idInstance и apiTokenInstance.
 5. Нажимайте кнопки, вводите данные и смотрите результат ответа от API.
 
