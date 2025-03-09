@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GREEN-API Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, textarea, button {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .readonly {
+      background-color: #eaeaea;
+      resize: vertical;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>GREEN-API Demo</h2>
+    <label>ID Instance:</label>
+    <input type="text" id="idInstance" placeholder="Введите idInstance">
+    
+    <label>API Token Instance:</label>
+    <input type="text" id="apiTokenInstance" placeholder="Введите apiTokenInstance">
+
+    <button onclick="getSettings()">getSettings</button>
+    <button onclick="getStateInstance()">getStateInstance</button>
+    <button onclick="sendMessage()">sendMessage</button>
+    <button onclick="sendFileByUrl()">sendFileByUrl</button>
+
+    <label>Номер получателя (для sendMessage и sendFileByUrl):</label>
+    <input type="text" id="phoneNumber" placeholder="например: 79991234567">
+
+    <label>Текст сообщения:</label>
+    <input type="text" id="messageText" placeholder="Введите сообщение">
+
+    <label>URL файла (для sendFileByUrl):</label>
+    <input type="text" id="fileUrl" placeholder="https://example.com/file.pdf">
+
+    <label>Ответ от API:</label>
+    <textarea id="apiResponse" class="readonly" rows="10" readonly></textarea>
+  </div>
+
+  <script>
+    function getBaseUrl() {
+      const id = document.getElementById('idInstance').value.trim();
+      const token = document.getElementById('apiTokenInstance').value.trim();
+      return `https://api.green-api.com/waInstance${id}`;
+    }
+
+    function updateResponse(data) {
+      document.getElementById('apiResponse').value = JSON.stringify(data, null, 2);
+    }
+
+    async function getSettings() {
+      const baseUrl = getBaseUrl();
+      const token = document.getElementById('apiTokenInstance').value.trim();
+      const response = await fetch(`${baseUrl}/getSettings/${token}`);
+      const data = await response.json();
+      updateResponse(data);
+    }
+
+    async function getStateInstance() {
+      const baseUrl = getBaseUrl();
+      const token = document.getElementById('apiTokenInstance').value.trim();
+      const response = await fetch(`${baseUrl}/getStateInstance/${token}`);
+      const data = await response.json();
+      updateResponse(data);
+    }
+
+    async function sendMessage() {
+      const baseUrl = getBaseUrl();
+      const token = document.getElementById('apiTokenInstance').value.trim();
+      const phone = document.getElementById('phoneNumber').value.trim();
+      const message = document.getElementById('messageText').value.trim();
+      const body = {
+        chatId: `${phone}@c.us`,
+        message: message
+      };
+      const response = await fetch(`${baseUrl}/sendMessage/${token}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await response.json();
+      updateResponse(data);
+    }
+
+    async function sendFileByUrl() {
+      const baseUrl = getBaseUrl();
+      const token = document.getElementById('apiTokenInstance').value.trim();
+      const phone = document.getElementById('phoneNumber').value.trim();
+      const fileUrl = document.getElementById('fileUrl').value.trim();
+      const body = {
+        chatId: `${phone}@c.us`,
+        urlFile: fileUrl,
+        fileName: fileUrl.split('/').pop()
+      };
+      const response = await fetch(`${baseUrl}/sendFileByUrl/${token}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      const data = await response.json();
+      updateResponse(data);
+    }
+  </script>
+</body>
+</html>
